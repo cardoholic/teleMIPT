@@ -33,7 +33,7 @@ def getPrepInfo(url):#получаем инфу по конкретному пр
 	if( r.status_code == 200):
 		soup = BeautifulSoup(r.text, 'html.parser')
 		#print(url)
-		items = list(soup.find(class_="wikitable card").children)б 
+		items = list(soup.find(class_="wikitable card").children)
 		resultObj = {}
 		resultObj["name"] = items[1].get_text().strip()#strip типа удаляет лишние пробелы, а гет_техт получает текст тега
 		resultObj["image"] = items[3].find('td').find('img')['src']
