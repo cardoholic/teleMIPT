@@ -16,7 +16,6 @@ def log(message, answer):
                                                                                   answer))
 
 
-parser.formatOutput(parser.finalSearch('чубаров'))
 
 @bot.message_handler(content_types=['text'])
 def handle_text(message):
