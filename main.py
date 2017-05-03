@@ -29,11 +29,11 @@ def handle_text(message):
                     if (type(result[key]) == list):
                         for item in result[key]:
                             bot.send_message(message.chat.id, item['skill'] + '  -  ' + item['value'])
-                    else:
-                        if (key == 'image'):
+                    elif (key == 'image'):
                             bot.send_message(message.chat.id, key + ' - http://wikimipt.org/' + result[key])
-                        else:
-                            bot.send_message(message.chat.id, key + ' - ' + result[key])
+                    else:
+                        if (key == 'name'):
+                            bot.send_message(message.chat.id, result[key])
             else:
                 bot.send_message(message.chat.id, 'Ничего не найдено')
            #log(message,answer)
