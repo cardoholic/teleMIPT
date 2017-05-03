@@ -26,7 +26,7 @@ def findPrepInList(name, array):# здесь находим нужного пр�
 	pattern = re.compile(name.lower())# получаем нужное регулярное выражение(загугли если не шаришь); регулярка а не поиск по подстроке потому что возможно поиск над будет улучшить - такой задел на будущее
 	for item in array:
 		if pattern.match(item['name']): # ну и просто сверяем все имена с регуляркой
-			result.append('http://wikimipt.org' + item['href'])
+			result.append({'name' : item['name'], 'href' : 'http://wikimipt.org' + item['href']})
 	return result;
 def getPrepInfo(url):#получаем инфу по конкретному препу(тут короче все так же, поэтому не буду особо расписывать)
 	r = requests.get(url)
@@ -50,9 +50,39 @@ def finalSearch(name):
 	result = findPrepInList(name, getPrepList(name))
 	if(len(result) != 0):
 		if(len(result) == 1):
-			return getPrepInfo(result[0])
+			return getPrepInfo(result[0]['href'])
 		else:
 			return result;
+
+
+def formatOutput(result):
+	if (type(result) == list):
+		for item in result:
+			print (item['name'] + ' - ' + item['href'])
+	elif (type(result) == dict):
+		for key in result:
+			if (type(result[key]) == list):
+				for item in result[key]:
+					print (item['skill'] + '  -  ' + item['value'])
+			else:
+				print key + ' - ' + result[key]
+	else:
+		print(u'Ничего не найдено')
+formatOutput(finalSearch(u'беклемишев'))
+
+
+# def emojify(num):
+# 	if(num >= 4.5):
+# 		return '❤️❤️❤️❤️❤️'
+# 	if num/1 = 4 :
+# 		return '⭐️⭐️⭐️⭐️'
+# 	elif num/1 = 3 : 
+# 		return '⭐️⭐️⭐️'
+# 	elif num/1 = 2 :
+# 		return '🍆🍆'
+# 	return '🆘'
+
+
 #что тебе над знать - файнал серч может вернуть три типа значений - ноне(если такого препа нет, или проихошла ошибка(в консоли тогда смотри)) -
 # в таком случае ты типа гришь извините препа нет или ошибка;
 #еще может вернуть обьект - тогда все четко; у обьекта(или словаря, это вроде  так здесь называется) 
