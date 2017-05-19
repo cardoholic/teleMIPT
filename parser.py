@@ -65,7 +65,7 @@ def formatOutput(result):
 				for item in result[key]:
 					print (item['skill'] + '  -  ' + item['value'])
 			else:
-				print key + ' - ' + result[key]
+				print (key + ' - ' + result[key])
 	else:
 		print(u'Ничего не найдено')
 def all():
