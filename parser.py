@@ -17,7 +17,7 @@ def getPrepList(name):# здесь получаем список препов с
 		result = []
 		for rawItem in rawPrepList:
 			cleanItem = list(rawItem.children)[0]
-			result.append({'name' : cleanItem['title'].lower(), 'href' : cleanItem['href']})#получаем массив всех препов с именем и ссылкой
+			result.append({'name' : cleanItem['title'], 'href' : cleanItem['href']})#получаем массив всех препов с именем и ссылкой
 		return result
 	else:
 		raise ValueError('Невозможно получить список преподавателей ((00((00(((' + ' - ' + r.status_code)# код 200 это типа хороший ответ, а на все остальное мы генерим ошибки

@@ -71,6 +71,7 @@ def emojify(num):
     return u'🆘'
 #log(message,answer)
 
+
 # @bot.message_handler(content_types=['text'])
 # def handle_text(message):
 #    if message.text == "mipt":
