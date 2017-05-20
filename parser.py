@@ -8,7 +8,7 @@ url_base = 'http://wikimipt.org/index.php?title=%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D
 def getPrepList(name):# здесь получаем список препов с викимипта(тех чьи фамилии на нужную букву начинаются)
 	url = url_base + name[0].upper()#получаем нужную ссылку(посмотри на викимипте как она выглядит)
 	r = requests.get(url)#получаем страницу
-	if( r.status_code == 200):
+	if( r.status_code == 200 ):
 		soup = BeautifulSoup(r.text, 'html.parser')#запускаем парсер
 		rawPrepList = soup.find(class_ ="mw-category-group")#находим нужный блок
 		if not rawPrepList:
@@ -23,7 +23,7 @@ def getPrepList(name):# здесь получаем список препов с
 		raise ValueError('Невозможно получить список преподавателей ((00((00(((' + ' - ' + r.status_code)# код 200 это типа хороший ответ, а на все остальное мы генерим ошибки
 def findPrepInList(name, array):# здесь находим нужного препа в списке()
 	result = []
-	pattern = re.compile(name.lower())# получаем нужное регулярное выражение(загугли если не шаришь); регулярка а не поиск по подстроке потому что возможно поиск над будет улучшить - такой задел на будущее
+	pattern = re.compile(name.lower(), flags=re.IGNORECASE)# получаем нужное регулярное выражение(загугли если не шаришь); регулярка а не поиск по подстроке потому что возможно поиск над будет улучшить - такой задел на будущее
 	for item in array:
 		if pattern.match(item['name']): # ну и просто сверяем все имена с регуляркой
 			result.append({'name' : item['name'], 'href' : 'http://wikimipt.org' + item['href']})
