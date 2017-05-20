@@ -41,23 +41,23 @@ def telemipt(message):
                     if (type(result[key]) == list):
                         rateList = ''
                         for item in result[key]:
-                            if (num(item['value']) != 0):
-                                rate += num(item['value'])
-                                if(item['skill'] == u'Знания'):
-                                    rateList = rateList + item['skill'] + '                                ' + \
-                                               emojiPrettify(item['value']) + '\n'
-                                elif (item['skill'] == u'В общении'):
-                                    rateList = rateList + item['skill'] + '                         ' + \
-                                               emojiPrettify(item['value']) + '\n'
-                                elif (item['skill'] == u'Халявность'):
-                                   rateList = rateList + item['skill'] +  '                        ' + \
-                                              emojiPrettify(item['value']) + '\n'
-                                elif (item['skill'] == u'Общая оценка'):
-                                    rateList = rateList + item['skill'] + '                  ' + \
-                                               emojiPrettify(item['value']) + '\n'
-                                else:
-                                    rateList= rateList + item['skill'] + '      ' + \
-                                              emojiPrettify(item['value']) + '\n'
+                        
+                            rate += num(item['value'])
+                            if(item['skill'] == u'Знания'):
+                                rateList = rateList + item['skill'] + '                                ' + \
+                                           emojiPrettify(item['value']) + '\n'
+                            elif (item['skill'] == u'В общении'):
+                                rateList = rateList + item['skill'] + '                         ' + \
+                                           emojiPrettify(item['value']) + '\n'
+                            elif (item['skill'] == u'Халявность'):
+                              rateList = rateList + item['skill'] +  '                        ' + \
+                                          emojiPrettify(item['value']) + '\n'
+                            elif (item['skill'] == u'Общая оценка'):
+                                rateList = rateList + item['skill'] + '                  ' + \
+                                           emojiPrettify(item['value']) + '\n'
+                            else:
+                                rateList= rateList + item['skill'] + '      ' + \
+                                          emojiPrettify(item['value']) + '\n'
                         bot.send_message(message.chat.id, rateList)
                     elif (key == 'image'):
                             bot.send_photo(message.chat.id, 'http://wikimipt.org/' + result[key] )
