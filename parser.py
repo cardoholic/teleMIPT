@@ -5,6 +5,7 @@ import re
 import requests;
 import unicodedata
 url_base = 'http://wikimipt.org/index.php?title=%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%9F%D1%80%D0%B5%D0%BF%D0%BE%D0%B4%D0%B0%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D0%B8_%D0%BF%D0%BE_%D0%B0%D0%BB%D1%84%D0%B0%D0%B2%D0%B8%D1%82%D1%83&from='
+
 def getPrepList(name):# здесь получаем список препов с викимипта(тех чьи фамилии на нужную букву начинаются)
 	url = url_base + name[0].upper()#получаем нужную ссылку(посмотри на викимипте как она выглядит)
 	r = requests.get(url)#получаем страницу
@@ -21,6 +22,7 @@ def getPrepList(name):# здесь получаем список препов с
 		return result
 	else:
 		raise ValueError('Невозможно получить список преподавателей ((00((00(((' + ' - ' + r.status_code)# код 200 это типа хороший ответ, а на все остальное мы генерим ошибки
+		
 def findPrepInList(name, array):# здесь находим нужного препа в списке()
 	result = []
 	pattern = re.compile(name.lower(), flags=re.IGNORECASE)# получаем нужное регулярное выражение 
@@ -31,6 +33,7 @@ def findPrepInList(name, array):# здесь находим нужного пр�
 	if( len(result) == 0 ):
 		print(name)
 	return result;
+
 def getPrepInfo(url):#получаем инфу по конкретному препу(тут короче все так же)
 	r = requests.get(url)
 	if( r.status_code == 200):
@@ -49,6 +52,7 @@ def getPrepInfo(url):#получаем инфу по конкретному пр
 		return resultObj
 	else:
 		raise ValueError('Невозможно получить страницу преподавателя (00((((((' + ' - ' + r.status_code)
+		
 def finalSearch(name):
 	result = findPrepInList(name, getPrepList(name))
 	if(len(result) != 0):
@@ -56,22 +60,6 @@ def finalSearch(name):
 			return getPrepInfo(result[0]['href'])
 		else:
 			return result;
-
-
-def formatOutput(result):
-	if (type(result) == list):
-		for item in result:
-			print (item['name'] + ' - ' + item['href'])
-	elif (type(result) == dict):
-		for key in result:
-			if (type(result[key]) == list):
-				for item in result[key]:
-					print (item['skill'] + '  -  ' + item['value'])
-			else:
-				print (key + ' - ' + result[key])
-	else:
-		print(u'Ничего не найдено')
-
 
 
 #файнал серч может вернуть три варианта:
