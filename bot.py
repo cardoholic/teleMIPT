@@ -90,7 +90,7 @@ def num(line):
         return float(num)
     else:
         print(num + ' false ')
-        return 0
+        return 0.0
 
 def emojiPrettify(line):
     return emojify(num(line)) + '   ' + line
