@@ -41,7 +41,6 @@ def telemipt(message):
                     if (type(result[key]) == list):
                         rateList = ''
                         for item in result[key]:
-                        
                             rate += num(item['value'])
                             if(item['skill'] == u'Знания'):
                                 rateList = rateList + item['skill'] + '                                ' + \
@@ -80,8 +79,6 @@ def telemipt(message):
             elif (rate!=0):
                 bot.send_message(message.chat.id, 'Бот считает, что это опасность')
 
-#думаю здесь надо прописать, что если там надпись (нет оценок) то значение выставить 0
-# и когда будем выводить оценки делать проверку на то, что значение 0->пишем нет оценок
 def num(line):
     words = line.split(' ')
     num = words[0]
@@ -91,9 +88,9 @@ def num(line):
         return 0.0
 
 def emojiPrettify(line):
-    return emojify(num(line)) + '   ' + line
-def emojify(num) : 
-    return round(num) * u'★' + (5 - round(num)) * u'☆'
+    return round(num(line)) * u'★' + (5 - round(num(line))) * u'☆' + '   ' + line
+#def emojify(num) :
+ #   return round(num) * u'★' + (5 - round(num)) * u'☆'
 # def emojify(num):
 #     if(num >= 4.5):
 #         return u'★★★★★'
