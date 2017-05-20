@@ -36,7 +36,8 @@ def telemipt(message):
                                       '&text=<a href="' + item['href'] + '">' + item['name'] + '</a>&parse_mode=HTML'
                         requests.get(message_url)
                         answer = item['name']
-                        log(message, answer)
+                        if logging == True:
+                            log(message, answer)
             elif (type(result) == dict):
                 for key in result:
                     if (type(result[key]) == list):
@@ -69,6 +70,9 @@ def telemipt(message):
                                 log(message, answer)
             else:
                 bot.send_message(message.chat.id, 'Ничего не найдено')
+                answer = 'Ничего не найдено'
+                if logging == True:
+                    log(message, answer)
                 #variable 'rate' stores the sum of all values from the teacher's rating
                 #rate/5 = average value of the teacher
                 #bot makes a subjective opinion about the teacher based on this value 
