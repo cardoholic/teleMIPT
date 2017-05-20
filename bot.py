@@ -42,7 +42,6 @@ def telemipt(message):
                     if (type(result[key]) == list):
                         rateList = ''
                         for item in result[key]:
-                        
                             rate += num(item['value'])
                             if(item['skill'] == u'Знания'):
                                 rateList = rateList + item['skill'] + '                                ' + \
