@@ -94,19 +94,21 @@ def num(line):
 
 def emojiPrettify(line):
     return emojify(num(line)) + '   ' + line
+def emojify(num) : 
+    return round(num) * u'★' + (5 - round(num)) * u'☆'
+# def emojify(num):
+#     if(num >= 4.5):
+#         return u'★★★★★'
 
-def emojify(num):
-    if(num >= 4.5):
-        return u'★★★★★'
-    if round(num) == 4 :
-        return u'★★★★☆'
-    elif round(num) == 3 :
-        return u'★★★☆☆'
-    elif round(num) == 2 :
-        return u'★★☆☆☆'
-    elif round(num) == 1 :
-        return u'★☆☆☆☆'
-    return u'☆☆☆☆☆'
+#     if round(num) == 4 :
+#         return u'★★★★☆'
+#     elif round(num) == 3 :
+#         return u'★★★☆☆'
+#     elif round(num) == 2 :
+#         return u'★★☆☆☆'
+#     elif round(num) == 1 :
+#         return u'★☆☆☆☆'
+#     return u'☆☆☆☆☆'
 
 # def emojify(num):
 #     if(num >= 4.5):
