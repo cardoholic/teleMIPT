@@ -83,10 +83,9 @@ def telemipt(message):
 #думаю здесь надо прописать, что если там надпись (нет оценок) то значение выставить 0
 # и когда будем выводить оценки делать проверку на то, что значение 0->пишем нет оценок
 def num(line):
-    for i in range(0, 8):
-        if(line[i] == '('):
-            num = line[:i].strip()
-            return float(num)
+    words = line.split(' ')
+    if (num = words[0].isDigit())  
+        return float(num)
 
 def emojiPrettify(line):
     return emojify(num(line)) + '   ' + line
