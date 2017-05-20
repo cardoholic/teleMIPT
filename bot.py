@@ -85,7 +85,7 @@ def telemipt(message):
 def num(line):
     words = line.split(' ')
     num = words[0]
-    if (num.isdigit()):  
+    if (!num.isalpha()):  
         print(num)
         return float(num)
     else:
