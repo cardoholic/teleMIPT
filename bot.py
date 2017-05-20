@@ -5,6 +5,7 @@ import telebot
 import requests
 from datetime import datetime
 from flask import Flask, request
+import os
 bot = telebot.TeleBot("349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0")
 url = 'https://api.telegram.org/bot349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0/'
 server = Flask(__name__)
@@ -24,7 +25,7 @@ def log(message, answer):
 def start(message):
     bot.send_message(message.chat.id, 'Привет, ' + message.from_user.first_name)
 #функция обработки входящих сообщений
-@bot.message_handler(content_types=['text'])
+@bot.message_handler(func=lambda message: True, content_types=['text'])
 def telemipt(message):
         if message.text:
             result = parser.finalSearch(message.text)
