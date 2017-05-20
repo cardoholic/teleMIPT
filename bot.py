@@ -84,7 +84,8 @@ def telemipt(message):
 # и когда будем выводить оценки делать проверку на то, что значение 0->пишем нет оценок
 def num(line):
     words = line.split(' ')
-    if (num = words[0].isDigit())  
+    num = words[0]
+    if (num.isDigit())  
         return float(num)
 
 def emojiPrettify(line):
