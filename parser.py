@@ -28,10 +28,7 @@ def findPrepInList(name, array):# здесь находим нужного пр�
 	pattern = re.compile(name.lower(), flags=re.IGNORECASE)# получаем нужное регулярное выражение 
 	for item in array:
 		if pattern.match(item['name']): # ну и просто сверяем все имена с регуляркой
-			print('fefe')
 			result.append({'name' : item['name'], 'href' : 'http://wikimipt.org' + item['href']})
-	if( len(result) == 0 ):
-		print(name)
 	return result;
 
 def getPrepInfo(url):#получаем инфу по конкретному препу(тут короче все так же)
