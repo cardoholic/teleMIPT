@@ -86,7 +86,8 @@ def num(line):
     words = line.split(' ')
     num = words[0]
     if (num.isdigit()):  
-        return float(nameum)
+        return float(num)
+    return 0.0
 
 def emojiPrettify(line):
     return emojify(num(line)) + '   ' + line
