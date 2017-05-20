@@ -85,8 +85,8 @@ def telemipt(message):
 def num(line):
     words = line.split(' ')
     num = words[0]
-    if (num.isDigit())  
-        return float(num)
+    if (num.isDigit()):  
+        return float(nameum)
 
 def emojiPrettify(line):
     return emojify(num(line)) + '   ' + line
