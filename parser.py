@@ -71,8 +71,7 @@ def formatOutput(result):
 				print (key + ' - ' + result[key])
 	else:
 		print(u'Ничего не найдено')
-def all():
-	formatOutput(finalSearch(u'беклемишев'))
+
 
 
 #файнал серч может вернуть три варианта:
