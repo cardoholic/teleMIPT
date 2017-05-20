@@ -104,7 +104,9 @@ def emojify(num):
         return u'★★★☆☆'
     elif round(num) == 2 :
         return u'★★☆☆☆'
-    return u'★☆☆☆☆'
+    elif round(num) == 1 :
+        return u'★☆☆☆☆'
+    return u'☆☆☆☆☆'
 
 # def emojify(num):
 #     if(num >= 4.5):
