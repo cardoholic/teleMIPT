@@ -23,6 +23,7 @@ def log(message, answer):
 
 @bot.message_handler(content_types=['text'])
 def telemipt(message):
+        print('JUST STARTED')
         if message.text:
             result = parser.finalSearch(message.text)
             rate = 0
