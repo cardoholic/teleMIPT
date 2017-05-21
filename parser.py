@@ -4,11 +4,21 @@ from bs4 import BeautifulSoup;
 import re
 import requests;
 import unicodedata
+import time
 url_base = 'http://wikimipt.org/index.php?title=%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%9F%D1%80%D0%B5%D0%BF%D0%BE%D0%B4%D0%B0%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D0%B8_%D0%BF%D0%BE_%D0%B0%D0%BB%D1%84%D0%B0%D0%B2%D0%B8%D1%82%D1%83&from='
-
+IS_TESTING = False
 def test(func):
-	def run_test(*args):
-		return func(args)
+	if(not IS_TESTING):
+		def run_test(*args):
+			return func(*args)
+	else:
+		def run_test(*args):
+			t0 = time.time()
+			x = func(*args)
+			t1 = time.time()
+			print (func.__name__ + ' - ' + str(t1 - t0))
+			return x
+	return run_test
 @test
 def getPrepList(name):# здесь получаем список препов с викимипта(тех чьи фамилии на нужную букву начинаются)
 	url = url_base + name[0].upper()#получаем нужную ссылку(посмотри на викимипте как она выглядит)
