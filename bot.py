@@ -84,13 +84,13 @@ def num(line):
         return 0.0
 #делаем предсказание исходя из суммарного рейтинга
 def make_bot_prediction(rate):
-    if (rate / 5 >= 4.5) :
+    if (rate >= 4.5) :
         return 'Бот считает, что этот препод бог'
-    elif (rate / 5 >= 4 and rate / 5 < 4.5):
+    elif (rate >= 4 and rate < 4.5):
         return 'Бот считает, что этот препод классный'
-    elif (rate / 5 >= 3 and rate / 5 < 4):
+    elif (rate >= 3 and rate < 4):
             return 'Бот считает, что этот препод среднячок'
-    elif (rate / 5 >= 2 and rate / 5 < 3):
+    elif (rate >= 2 and rate < 3):
         return 'Бот считает, что этот препод так себе'
     else:
         return 'Бот считает, что это опасность'
