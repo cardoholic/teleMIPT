@@ -17,7 +17,7 @@ def test(func):
 			x = func(*args)
 			t1 = time.time()
 			print ('\n -----------')
-			print (' func.__name__ + ' - ' + str(t1 - t0))
+			print ( func.__name__ + ' - ' + str(t1 - t0))
 			return x
 	return run_test
 
