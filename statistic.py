@@ -3,6 +3,7 @@
 #todo : таблица день - преп, таблица преподавателей
 def findInDatabase(conn, name):
     cur = connection.cursor()
+    print(cur)
     cur.execute("""select name, href from prepods where name LIKE %(name)s""", {'name' : name})
     result = cur.fetchmany()
     cur.close();
