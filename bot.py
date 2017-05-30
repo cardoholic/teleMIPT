@@ -3,25 +3,20 @@
 import parser
 import telebot
 import requests
-from datetime import datetime
+from datetime import datetime, date
 from flask import Flask, request
+import statistic
 import os
 import psycopg2
-import urlparse
+from urllib.parse import urlparse
+from flask_sqlalchemy import SQLAlchemy
 
-urlparse.uses_netloc.append("postgres")
-url = urlparse.urlparse(os.environ["DATABASE_URL"])
-
-conn = psycopg2.connect(
-    database=url.path[1:],
-    user=url.username,
-    password=url.password,
-    host=url.hostname,
-    port=url.port
-)     
 bot = telebot.TeleBot("349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0")
 url = 'https://api.telegram.org/bot349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0/'
 server = Flask(__name__)
+server.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+db = SQLAlchemy(server)
+print(db)
 #будем писать логи или нет
 is_logging = True
 print('JUST STARTED')
@@ -34,6 +29,28 @@ def log(message, answer):
                                                                                   message.text,
                                                                                      answer))
     print("\n-------")
+
+class Prepods(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80))
+    href = db.Column(db.String(120))
+
+    def __init__(self, name, href):
+        self.name = name
+        self.href = href
+
+class Stats(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date)
+    prepod_id = db.Column(db.Integer)
+    user_id = db.Column(db.Integer)
+
+    def __init__(self, prepod_name, user_id):
+        self.date = datetime.now()
+        self.prepod_id = Prepods.query.filter_by(name=prepod_name).first().id
+        self.user_id = user_id
+
+
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.send_message(message.chat.id, 'Привет, ' + message.from_user.first_name)
@@ -41,7 +58,28 @@ def start(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def telemipt(message):
         if message.text:
-            result = parser.finalSearch(message.text)
+            result = list(Prepods.query.filter(Prepods.name.ilike('%' + message.text + '%')))
+            print(result)
+            if (len(result) == 0) :
+                result = parser.finalSearch(message.text)
+                if (type(result) == dict):
+                    prep = Prepods(result['name'], result['href'])
+                    db.session.add(prep)
+                    db.session.commit()
+                elif (type(result) == list):
+                    for item in result:
+                        prep = Prepods(item['name'], item['href'])
+                        db.session.add(prep)
+                    db.session.commit()
+            else:
+                if(len(result) == 1):
+                    # print(result[0].href)
+                    result = parser.getPrepInfo(result[0].href)
+                else:
+                    new_result = []
+                    for item in result:
+                        new_result.append({'href' : item.href, 'name' : item.name })
+                    result = new_result
             summary_rate = 0
             if (type(result) == list):
                 if (len(result)>=5):
@@ -78,6 +116,9 @@ def telemipt(message):
                     bot.send_message( message.chat.id, make_bot_prediction( summary_rate / 5 ))
                 else:
                      bot.send_message( message.chat.id, 'Here be dragons later')
+
+                db.session.add(Stats(result['name'], message.chat.id))
+                db.session.commit()
             else:
                 bot.send_message(message.chat.id, 'Ничего не найдено')
                 answer = 'Ничего не найдено'
@@ -145,6 +186,7 @@ def webhook():
 @server.route("/stop")
 def webhook_stop():
     bot.remove_webhook()
+
 
 server.run(host="0.0.0.0", port=os.environ.get('PORT', 5000))
 server = Flask(__name__)
