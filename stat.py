@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 #todo : таблица день - преп, таблица преподавателей
 def findInDatabase(conn, name):
     cur = connection.cursor()
