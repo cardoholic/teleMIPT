@@ -9,8 +9,8 @@ import os
 import psycopg2
 from urllib.parse import urlparse
 
-urlparse.uses_netloc.append("postgres")
-url = urlparse.urlparse(os.environ["DATABASE_URL"])
+
+url = urlparse(os.environ["DATABASE_URL"])
 
 conn = psycopg2.connect(
     database=url.path[1:],
@@ -41,6 +41,7 @@ def start(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def telemipt(message):
         if message.text:
+            if ()
             result = parser.finalSearch(message.text)
             summary_rate = 0
             if (type(result) == list):
