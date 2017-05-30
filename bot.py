@@ -12,6 +12,7 @@ from urllib.parse import urlparse
 
 
 url = urlparse(os.environ["DATABASE_URL"])
+print(url)
 try:
     conn = psycopg2.connect(
         database=url.path[1:],
@@ -45,6 +46,7 @@ def start(message):
 def telemipt(message):
         if message.text:
             result = statistic.findInDatabase(conn, message.text)
+            print(result)
             if (not result):
                 result = parser.finalSearch(message.text)
                 if (type(result) == dict):
