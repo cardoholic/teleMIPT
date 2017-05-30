@@ -5,7 +5,7 @@ import telebot
 import requests
 from datetime import datetime, date
 from flask import Flask, request
-import stat
+import statistic
 import os
 import psycopg2
 from urllib.parse import urlparse
@@ -42,11 +42,11 @@ def start(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def telemipt(message):
         if message.text:
-            result = stat.findInDatabase(conn, message.text)
+            result = statistic.findInDatabase(conn, message.text)
             if (not result):
                 result = parser.finalSearch(message.text)
                 if (type(result) == dict):
-                    stat.insertIntoPrepods(conn, result.name, result.href)
+                    statistic.insertIntoPrepods(conn, result.name, result.href)
             summary_rate = 0
             if (type(result) == list):
                 if (len(result)>=5):
@@ -83,7 +83,7 @@ def telemipt(message):
                     bot.send_message( message.chat.id, make_bot_prediction( summary_rate / 5 ))
                 else:
                      bot.send_message( message.chat.id, 'Here be dragons later')
-                stat.insertIntoStats(conn, datetime.now().strftime("%d.%m.%Y"), result.name, message.chat.id )
+                statistic.insertIntoStats(conn, datetime.now().strftime("%d.%m.%Y"), result.name, message.chat.id )
             else:
                 bot.send_message(message.chat.id, 'Ничего не найдено')
                 answer = 'Ничего не найдено'
