@@ -15,14 +15,16 @@ url = urlparse(os.environ["DATABASE_URL"])
 print(url)
 try:
     conn = psycopg2.connect(
-        database=url.path[1:],
+        dbname=url.path[1:],
         user=url.username,
         password=url.password,
         host=url.hostname,
         port=url.port
     )
+    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 except:
     print('Что-то не так ')
+
 bot = telebot.TeleBot("349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0")
 url = 'https://api.telegram.org/bot349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0/'
 server = Flask(__name__)
