@@ -12,10 +12,10 @@ def insertIntoPrepods(con, name, href):
   cur.close();
   return result;
 
-def insertIntoStats(con, date, name):
+def insertIntoStats(con, date, name, user_id):
     cur = connection.cursor()
     cur.execute("""select id from prepods where name=%(name)s""", {'name' : name})
     result = cur.fetchone();
-    result = cur.execute("""insert into Stats values(%(date)s, %(prepod_id)s)""", {'date': date, 'prepod_id' : result})
+    result = cur.execute("""insert into Stats values(%(date)s, %(prepod_id)s, %(user_id)s)""", {'date': date, 'prepod_id' : result, 'user_id' : user_id})
     cur.close();
     return result;
