@@ -7,7 +7,7 @@ from datetime import datetime
 from flask import Flask, request
 import os
 import psycopg2
-import urlparse
+from urllib.parse import urlparse
 
 urlparse.uses_netloc.append("postgres")
 url = urlparse.urlparse(os.environ["DATABASE_URL"])
@@ -18,7 +18,7 @@ conn = psycopg2.connect(
     password=url.password,
     host=url.hostname,
     port=url.port
-)     
+)
 bot = telebot.TeleBot("349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0")
 url = 'https://api.telegram.org/bot349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0/'
 server = Flask(__name__)
