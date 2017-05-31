@@ -64,7 +64,7 @@ def telemipt(message):
                 result = parser.finalSearch(message.text)
             else:
             	if(len(result) == 1):
-            		result = getPrepInfo(result[0]['href'])
+            		result = getPrepInfo(dict(result[0])['href'])
             summary_rate = 0
             if (type(result) == list):
                 if (len(result)>=5):
