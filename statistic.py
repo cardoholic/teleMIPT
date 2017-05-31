@@ -22,3 +22,19 @@ def insertIntoStats(con, date, name, user_id):
     result = cur.execute("""insert into Stats values(%(date)s, %(prepod_id)s, %(user_id)s)""", {'date': date, 'prepod_id' : result, 'user_id' : user_id})
     cur.close();
     return result;
+db.create_all()
+class Prepod(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80))
+    href = db.Column(db.String(120))
+
+    def __init__(self, name, email):
+        self.name = name
+        self.href = href
+
+    def __repr__(self):
+        return '<Name %r>' % self.name
+
+prepod = Prepod("Бек", 'http')
+db.session.add(prepod)
+db.session.commit()
