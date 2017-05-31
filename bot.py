@@ -106,9 +106,9 @@ def telemipt(message):
                     bot.send_message( message.chat.id, make_bot_prediction( summary_rate / 5 ))
                 else:
                      bot.send_message( message.chat.id, 'Here be dragons later')
-                prep = Prepods(result.name, result.href)
+                prep = Prepods(result['name'], result['href'])
                 db.session.add(prep)
-                db.session.add(Stats(result.name, message.chat.id))
+                db.session.add(Stats(result['name'], message.chat.id))
                 db.session.commit()
             else:
                 bot.send_message(message.chat.id, 'Ничего не найдено')
