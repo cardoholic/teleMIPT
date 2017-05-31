@@ -147,6 +147,22 @@ def webhook():
 @server.route("/stop")
 def webhook_stop():
     bot.remove_webhook()
+    db.create_all()
+class Prepod(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80))
+    href = db.Column(db.String(120))
+
+    def __init__(self, name, email):
+        self.name = name
+        self.href = href
+
+    def __repr__(self):
+        return '<Name %r>' % self.name
+
+prepod = Prepod("Бек", 'http')
+db.session.add(prepod)
+db.session.commit()
 
 server.run(host="0.0.0.0", port=os.environ.get('PORT', 5000))
 server = Flask(__name__)
