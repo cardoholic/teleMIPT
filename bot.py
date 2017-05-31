@@ -147,7 +147,8 @@ def webhook():
 @server.route("/stop")
 def webhook_stop():
     bot.remove_webhook()
-    db.create_all()
+
+
 class Prepods(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
@@ -158,11 +159,23 @@ class Prepods(db.Model):
         self.href = href
 
     def __repr__(self):
-        return '<Name %r>' % self.name
+        return {id : self.id, name: self.name, href: self.href}
 
-prepod = Prepods("Бек", 'http')
-db.session.add(prepod)
-db.session.commit()
+class Stats():
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date)
+    prepod_id = db.Column(db.Integer)
+    user_id = db.Column(db.Integer)
+
+    def __init__(self, prepod_name, user_id):
+        self.date = datetime.now().strftime("%d.%m.%Y")
+        self.prepod_id = Prepods.query.filter_by(name=prepod_name).first().name
+        self.user_id = user_id
+
+    def __repr__(self):
+        return {id: self.id, date : self.date, prepod_id : self.prepod_id, user_id : self.user_id}
+print( Prepods.query_all())
+
 
 server.run(host="0.0.0.0", port=os.environ.get('PORT', 5000))
 server = Flask(__name__)
