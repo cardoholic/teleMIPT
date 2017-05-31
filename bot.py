@@ -9,7 +9,7 @@ import statistic
 import os
 import psycopg2
 from urllib.parse import urlparse
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
 
 
