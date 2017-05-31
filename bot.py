@@ -64,11 +64,14 @@ def start(message):
 def telemipt(message):
         if message.text:
             result = Prepods.query.filter(Prepods.name.ilike('%' + message.text + '%'))
-            if (not result) :
+            if (len(result) != 0) :
                 result = parser.finalSearch(message.text)
                 prep = Prepods(result.name, result.href)
                 db.session.add(prep)
                 db.session.commit()
+            else:
+            	if(len(result) == 1):
+            		result = getPrepInfo(result[0]['href'])
             summary_rate = 0
             if (type(result) == list):
                 if (len(result)>=5):
