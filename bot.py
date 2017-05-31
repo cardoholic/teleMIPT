@@ -63,7 +63,7 @@ def start(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def telemipt(message):
         if message.text:
-            result = Prepods.query.filter(Prepods.name.ilike('%' + message.text + '%'))
+            result = list(Prepods.query.filter(Prepods.name.ilike('%' + message.text + '%')))
             print(result)
             if (len(result) != 0) :
                 result = parser.finalSearch(message.text)
