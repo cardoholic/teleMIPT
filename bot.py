@@ -30,6 +30,32 @@ def log(message, answer):
                                                                                      answer))
     print("\n-------")
 
+class Prepods(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80))
+    href = db.Column(db.String(120))
+
+    def __init__(self, name, href):
+        self.name = name
+        self.href = href
+
+    def __repr__(self):
+        return 'It is ' + self.name
+
+class Stats(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date)
+    prepod_id = db.Column(db.Integer)
+    user_id = db.Column(db.Integer)
+
+    def __init__(self, prepod_name, user_id):
+        self.date = datetime.now()
+        self.prepod_id = Prepods.query.filter_by(name=prepod_name).first().id
+        self.user_id = user_id
+
+    def __repr__(self):
+        return "Date - " + str(self.date) + '  ' + 'name - ' + Prepods.query.filter_by(id=self.id).first().name + '\n'
+
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.send_message(message.chat.id, 'Привет, ' + message.from_user.first_name)
@@ -37,11 +63,9 @@ def start(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def telemipt(message):
         if message.text:
-            #result = statistic.findInDatabase(conn, message.text)
-            #print(result)
+            result = Prepod.query.filter_by(name.like(message.text)).first()
+            print(result)
             result = parser.finalSearch(message.text)
-                # if (type(result) == dict):
-                #     statistic.insertIntoPrepods(conn, result.name, result.href)
             summary_rate = 0
             if (type(result) == list):
                 if (len(result)>=5):
@@ -147,36 +171,6 @@ def webhook():
 def webhook_stop():
     bot.remove_webhook()
 
-
-class Prepods(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80))
-    href = db.Column(db.String(120))
-
-    def __init__(self, name, href):
-        self.name = name
-        self.href = href
-
-    def __repr__(self):
-        return 'It is ' + self.name
-
-class Stats(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date)
-    prepod_id = db.Column(db.Integer)
-    user_id = db.Column(db.Integer)
-
-    def __init__(self, prepod_name, user_id):
-        self.date = datetime.now()
-        self.prepod_id = Prepods.query.filter_by(name=prepod_name).first().id
-        self.user_id = user_id
-
-    def __repr__(self):
-        return "Date - " + str(self.date) + '  ' + 'name - ' + Prepods.query.filter_by(id=self.id).first().name + '\n'
-
-print( Prepods.query.all())
-db.session.add(Stats('Бек', 231))
-db.session.commit()
 
 server.run(host="0.0.0.0", port=os.environ.get('PORT', 5000))
 server = Flask(__name__)
