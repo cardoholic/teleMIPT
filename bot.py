@@ -161,7 +161,7 @@ class Prepods(db.Model):
     def __repr__(self):
         return {id : self.id, name: self.name, href: self.href}
 
-class Stats():
+class Stats(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date)
     prepod_id = db.Column(db.Integer)
@@ -174,6 +174,7 @@ class Stats():
 
     def __repr__(self):
         return {id: self.id, date : self.date, prepod_id : self.prepod_id, user_id : self.user_id}
+
 print( Prepods.query_all())
 
 
