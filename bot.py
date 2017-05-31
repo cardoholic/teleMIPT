@@ -62,9 +62,13 @@ def telemipt(message):
             print(result)
             if (len(result) == 0) :
                 result = parser.finalSearch(message.text)
+                if (type(result) == dict):
+                    prep = Prepods(result['name'], result['href'])
+                    db.session.add(prep)
+                    db.session.commit()
             else:
             	if(len(result) == 1):
-            		result = getPrepInfo(dict(result[0])['href'])
+            		result = getPrepInfo(result[0].href)
             summary_rate = 0
             if (type(result) == list):
                 if (len(result)>=5):
@@ -101,8 +105,7 @@ def telemipt(message):
                     bot.send_message( message.chat.id, make_bot_prediction( summary_rate / 5 ))
                 else:
                      bot.send_message( message.chat.id, 'Here be dragons later')
-                prep = Prepods(result['name'], result['href'])
-                db.session.add(prep)
+
                 db.session.add(Stats(result['name'], message.chat.id))
                 db.session.commit()
             else:
