@@ -175,7 +175,8 @@ class Stats(db.Model):
         return "Date - " + str(self.date) + '  ' + 'name - ' + Prepods.query.filter_by(id=self.id).first().name + '\n'
 
 print( Prepods.query.all())
-
+db.session.add(Stats('Бек', 231))
+db.session.commit()
 
 server.run(host="0.0.0.0", port=os.environ.get('PORT', 5000))
 server = Flask(__name__)
