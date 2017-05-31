@@ -63,8 +63,8 @@ def start(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def telemipt(message):
         if message.text:
-            result = Prepod.query.filter_by(name.like(message.text)).first()
-            print(result)
+            # result = Prepod.query.filter_by(name.like(message.text)).first()
+            # print(result)
             result = parser.finalSearch(message.text)
             summary_rate = 0
             if (type(result) == list):
