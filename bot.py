@@ -148,7 +148,7 @@ def webhook():
 def webhook_stop():
     bot.remove_webhook()
     db.create_all()
-class Prepod(db.Model):
+class Prepods(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
     href = db.Column(db.String(120))
@@ -160,7 +160,7 @@ class Prepod(db.Model):
     def __repr__(self):
         return '<Name %r>' % self.name
 
-prepod = Prepod("Бек", 'http')
+prepod = Prepods("Бек", 'http')
 db.session.add(prepod)
 db.session.commit()
 
