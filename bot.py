@@ -40,8 +40,7 @@ def telemipt(message):
         if message.text:
             #result = statistic.findInDatabase(conn, message.text)
             #print(result)
-            if (not result):
-                result = parser.finalSearch(message.text)
+            result = parser.finalSearch(message.text)
                 # if (type(result) == dict):
                 #     statistic.insertIntoPrepods(conn, result.name, result.href)
             summary_rate = 0
