@@ -108,7 +108,6 @@ def telemipt(message):
                      bot.send_message( message.chat.id, 'Here be dragons later')
                 prep = Prepods(result.name, result.href)
                 db.session.add(prep)
-                db.session.commit()
                 db.session.add(Stats(result.name, message.chat.id))
                 db.session.commit()
             else:
