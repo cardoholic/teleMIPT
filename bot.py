@@ -167,7 +167,7 @@ class Stats(db.Model):
     user_id = db.Column(db.Integer)
 
     def __init__(self, prepod_name, user_id):
-        self.date = datetime.now().strftime("%d.%m.%Y")
+        self.date = datetime.now().strftime("%d/%m/%Y")
         self.prepod_id = Prepods.query.filter_by(name=prepod_name).first().id
         self.user_id = user_id
 
