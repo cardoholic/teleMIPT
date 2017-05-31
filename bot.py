@@ -66,6 +66,10 @@ def telemipt(message):
                     prep = Prepods(result['name'], result['href'])
                     db.session.add(prep)
                     db.session.commit()
+                elif (type(result) == list):
+                    prep = Prepods(result['name'], result['href'])
+                    db.session.add(prep)
+                    db.session.commit()
             else:
                 if(len(result) == 1):
                     # print(result[0].href)
