@@ -63,9 +63,12 @@ def start(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def telemipt(message):
         if message.text:
-            result = Prepods.query.filter(Prepods.name.like(message.text + '%')).first()
-            print(result)
-            result = parser.finalSearch(message.text)
+            result = Prepods.query.filter(Prepods.name.ilike('%' + message.text + '%'))
+            if (not result) :
+                result = parser.finalSearch(message.text)
+                prep = Prepods(result.name, result.href)
+                db.session.add(prep)
+                db.session.commit()
             summary_rate = 0
             if (type(result) == list):
                 if (len(result)>=5):
@@ -102,7 +105,8 @@ def telemipt(message):
                     bot.send_message( message.chat.id, make_bot_prediction( summary_rate / 5 ))
                 else:
                      bot.send_message( message.chat.id, 'Here be dragons later')
-                # statistic.insertIntoStats(conn, datetime.now().strftime("%d.%m.%Y"), result.name, message.chat.id )
+                db.session.add(Stats(result.name, message.chat.id))
+                db.session.commit()
             else:
                 bot.send_message(message.chat.id, 'Ничего не найдено')
                 answer = 'Ничего не найдено'
