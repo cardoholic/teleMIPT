@@ -158,7 +158,7 @@ class Prepods(db.Model):
         self.href = href
 
     def __repr__(self):
-        return {'id' : self.id, 'name': self.name, 'href': self.href}
+        return 'It is ' + self.name
 
 class Stats(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -172,7 +172,7 @@ class Stats(db.Model):
         self.user_id = user_id
 
     def __repr__(self):
-        return {'id': self.id, 'date' : self.date, 'prepod_id' : self.prepod_id, 'user_id' : self.user_id}
+        return "Date - " + str(self.date) + '  ' + 'name - ' + Prepods.query.filter_by(id=self.id).first().name + '\n'
 
 print( Prepods.query.all())
 
