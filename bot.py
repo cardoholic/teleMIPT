@@ -9,21 +9,11 @@ import statistic
 import os
 import psycopg2
 from urllib.parse import urlparse
+from flask.ext.sqlalchemy import SQLAlchemy
 
-
-url = urlparse(os.environ["DATABASE_URL"])
-print(url)
-try:
-    conn = psycopg2.connect(
-        dbname=url.path[1:],
-        user=url.username,
-        password=url.password,
-        host=url.hostname,
-        port=url.port
-    )
-    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-except:
-    print('Что-то не так ')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+db = SQLAlchemy(app)
+print(db)
 
 bot = telebot.TeleBot("349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0")
 url = 'https://api.telegram.org/bot349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0/'
@@ -47,12 +37,12 @@ def start(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def telemipt(message):
         if message.text:
-            result = statistic.findInDatabase(conn, message.text)
-            print(result)
+            #result = statistic.findInDatabase(conn, message.text)
+            #print(result)
             if (not result):
                 result = parser.finalSearch(message.text)
-                if (type(result) == dict):
-                    statistic.insertIntoPrepods(conn, result.name, result.href)
+                # if (type(result) == dict):
+                #     statistic.insertIntoPrepods(conn, result.name, result.href)
             summary_rate = 0
             if (type(result) == list):
                 if (len(result)>=5):
@@ -89,7 +79,7 @@ def telemipt(message):
                     bot.send_message( message.chat.id, make_bot_prediction( summary_rate / 5 ))
                 else:
                      bot.send_message( message.chat.id, 'Here be dragons later')
-                statistic.insertIntoStats(conn, datetime.now().strftime("%d.%m.%Y"), result.name, message.chat.id )
+                # statistic.insertIntoStats(conn, datetime.now().strftime("%d.%m.%Y"), result.name, message.chat.id )
             else:
                 bot.send_message(message.chat.id, 'Ничего не найдено')
                 answer = 'Ничего не найдено'
