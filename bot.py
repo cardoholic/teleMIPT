@@ -68,8 +68,12 @@ def telemipt(message):
                     db.session.commit()
             else:
                 if(len(result) == 1):
-                    print(result[0].href)
+                    # print(result[0].href)
                     result = parser.getPrepInfo(result[0].href)
+                else:
+                    for item in result:
+                        result['href'] = result.href
+                        result['name'] = result.name
             summary_rate = 0
             if (type(result) == list):
                 if (len(result)>=5):
