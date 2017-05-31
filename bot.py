@@ -39,9 +39,6 @@ class Prepods(db.Model):
         self.name = name
         self.href = href
 
-    def __repr__(self):
-        return 'It is ' + self.name
-
 class Stats(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date)
@@ -53,8 +50,6 @@ class Stats(db.Model):
         self.prepod_id = Prepods.query.filter_by(name=prepod_name).first().id
         self.user_id = user_id
 
-    def __repr__(self):
-        return "Date - " + str(self.date) + '  ' + 'name - ' + Prepods.query.filter_by(id=self.id).first().name + '\n'
 
 @bot.message_handler(commands=['start'])
 def start(message):
