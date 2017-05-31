@@ -11,13 +11,14 @@ import psycopg2
 from urllib.parse import urlparse
 from flask.ext.sqlalchemy import SQLAlchemy
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
-db = SQLAlchemy(app)
-print(db)
+
 
 bot = telebot.TeleBot("349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0")
 url = 'https://api.telegram.org/bot349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0/'
 server = Flask(__name__)
+server.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+db = SQLAlchemy(server)
+print(db)
 #будем писать логи или нет
 is_logging = True
 print('JUST STARTED')
