@@ -153,7 +153,7 @@ class Prepod(db.Model):
     name = db.Column(db.String(80))
     href = db.Column(db.String(120))
 
-    def __init__(self, name, email):
+    def __init__(self, name, href):
         self.name = name
         self.href = href
 
