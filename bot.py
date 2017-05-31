@@ -71,9 +71,10 @@ def telemipt(message):
                     # print(result[0].href)
                     result = parser.getPrepInfo(result[0].href)
                 else:
+                    new_result = []
                     for item in result:
-                        result['href'] = result.href
-                        result['name'] = result.name
+                        new_result.append({'href' : result.href, 'name' : result.name })
+                    result = new_result
             summary_rate = 0
             if (type(result) == list):
                 if (len(result)>=5):
