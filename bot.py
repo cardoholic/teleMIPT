@@ -11,8 +11,6 @@ import psycopg2
 from urllib.parse import urlparse
 from flask_sqlalchemy import SQLAlchemy
 
-
-
 bot = telebot.TeleBot("349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0")
 url = 'https://api.telegram.org/bot349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0/'
 server = Flask(__name__)
@@ -31,6 +29,7 @@ def log(message, answer):
                                                                                   message.text,
                                                                                      answer))
     print("\n-------")
+
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.send_message(message.chat.id, 'Привет, ' + message.from_user.first_name)
@@ -175,7 +174,7 @@ class Stats(db.Model):
     def __repr__(self):
         return {id: self.id, date : self.date, prepod_id : self.prepod_id, user_id : self.user_id}
 
-print( Prepods.query_all())
+print( Prepods.query.all())
 
 
 server.run(host="0.0.0.0", port=os.environ.get('PORT', 5000))
