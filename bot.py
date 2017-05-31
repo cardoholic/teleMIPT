@@ -73,7 +73,7 @@ def telemipt(message):
                 else:
                     new_result = []
                     for item in result:
-                        new_result.append({'href' : result.href, 'name' : result.name })
+                        new_result.append({'href' : item.href, 'name' : item.name })
                     result = new_result
             summary_rate = 0
             if (type(result) == list):
