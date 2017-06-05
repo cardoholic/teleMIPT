@@ -8,7 +8,7 @@ from flask import Flask, request
 import statistic
 import os
 from database import db, Prepod, Stats, server
-
+from telebot import types
 
 bot = telebot.TeleBot("349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0")
 url = 'https://api.telegram.org/bot349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0/'
@@ -42,16 +42,16 @@ def telemipt(message):
                     if (IS_LOGGING):
                         log(message, answer)
                 else:
-                    markup = telebot.types.ReplyKeyboardMarkup(row_width=1)
+                    markup = types.ReplyKeyboardMarkup(row_width=1)
                     for item in result:
                         #чтобы ссылка красиво выглядела
                         # message_url = url + 'sendMessage' + '?chat_id=' + str(message.chat.id) + \
                         #               '&text=<a href="' + item['href'] + '">' + item['name'] + '</a>&parse_mode=HTML'
-                        # requests.get(message_url)
-                        markup.add(telebot.types.KeyboardButton(item['name']))
+                        # requests.get(message_url
+                        markup.add(types.KeyboardButton(item['name']))
                         # answer = item['name']
-                        if (IS_LOGGING):
-                            log(message, answer)
+                        # if (IS_LOGGING):
+                            # log(message, answer)
                     bot.sendMessage(message.chat.id, "Выберите преподавателя:", reply_markup=markup)
             elif (type(result) == dict):
                 for key in result:
