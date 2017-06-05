@@ -91,11 +91,14 @@ def telemipt(message):
                     bot.send_message( message.chat.id, make_bot_prediction( summary_rate / 5 ))
                 else:
                      bot.send_message( message.chat.id, 'Here be dragons later')
-                prep = session.query(Prepod).filter_by(name=result['name']).first()
-                if ( not prepod ):
+                preps = list(session.query(Prepod).filter_by(name=result['name']))
+                print(preps)
+                if (len(preps) == 0):
                     prep = Prepod(result['name'])
                     db.session.add(prep)
                     print(prep.id)
+                else:
+                    prep = preps[0]
                 db.session.add(Stats(prep.id, message.chat.id));
                 db.session.commit()
             else:
