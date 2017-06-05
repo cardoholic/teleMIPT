@@ -6,19 +6,15 @@ import requests
 from datetime import datetime, date
 from flask import Flask, request
 import statistic
-import os
-import psycopg2
-from urllib.parse import urlparse
+# import os
+# import psycopg2
+# from urllib.parse import urlparse
 from database import db, Prepod, Stats, server
-
 
 bot = telebot.TeleBot("349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0")
 url = 'https://api.telegram.org/bot349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0/'
 
-
-# print(db)
-#будем писать логи или нет
-is_logging = True
+IS_LOGGING = True
 print('JUST STARTED')
 #логгер
 def log(message, answer):
@@ -44,7 +40,7 @@ def telemipt(message):
                 if (len(result)>=5):
                     answer = 'Формулируй запрос чётче. Результатов слишком много: ' + str(len(result));
                     bot.send_message(message.chat.id, answer)
-                    if (is_logging):
+                    if (IS_LOGGING):
                         log(message, answer)
                 else:
                     for item in result:
@@ -53,7 +49,7 @@ def telemipt(message):
                                       '&text=<a href="' + item['href'] + '">' + item['name'] + '</a>&parse_mode=HTML'
                         requests.get(message_url)
                         answer = item['name']
-                        if (is_logging):
+                        if (IS_LOGGING):
                             log(message, answer)
             elif (type(result) == dict):
                 for key in result:
@@ -69,7 +65,7 @@ def telemipt(message):
                         if (key == 'name'):
                             answer = result[key]
                             bot.send_message( message.chat.id, result[key] )
-                if (is_logging):
+                if (IS_LOGGING):
                     log(message, answer)
                 if (summary_rate != 0):
                     bot.send_message( message.chat.id, make_bot_prediction( summary_rate / 5 ))
@@ -87,12 +83,8 @@ def telemipt(message):
             else:
                 bot.send_message(message.chat.id, 'Ничего не найдено')
                 answer = 'Ничего не найдено'
-                if (is_logging):
+                if (IS_LOGGING):
                     log(message, answer)
-
-
-
-
 
 #берет значение рейтинга(число) по данному полю
 def num(line):
