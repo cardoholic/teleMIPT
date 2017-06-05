@@ -1,5 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-from bot import server
 from datetime import datetime
 from flask import Flask, request
 import os
