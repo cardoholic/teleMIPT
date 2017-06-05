@@ -98,6 +98,7 @@ def telemipt(message):
                 if (len(preps) == 0):
                     prep = Prepod(result['name'])
                     db.session.add(prep)
+                    db.session.flush()
                     print(prep.id)
                 else:
                     prep = preps[0]
