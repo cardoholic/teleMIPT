@@ -55,6 +55,7 @@ def start(message):
 def telemipt(message):
         if message.text:
             result = parser.finalSearch(message.text)
+            bot.send_chat_action(message.chat.id, 'typing')
             summary_rate = 0
             if (type(result) == list):
                 if (len(result)>=5):
