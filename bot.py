@@ -9,13 +9,12 @@ import statistic
 import os
 import psycopg2
 from urllib.parse import urlparse
-from database import db, Prepod, Stats
+from database import db, Prepod, Stats, server
 
 
 bot = telebot.TeleBot("349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0")
 url = 'https://api.telegram.org/bot349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0/'
-server = Flask(__name__)
-server.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+
 
 # print(db)
 #будем писать логи или нет

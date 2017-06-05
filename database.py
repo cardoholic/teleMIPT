@@ -1,7 +1,13 @@
 from flask_sqlalchemy import SQLAlchemy
 from bot import server
 from datetime import datetime
+from flask import Flask, request
+import os
+import psycopg2
+from urllib.parse import urlparse
 
+server = Flask(__name__)
+server.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db = SQLAlchemy(server)
 
 class Prepod(db.Model):
