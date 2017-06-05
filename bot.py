@@ -48,7 +48,7 @@ def telemipt(message):
                         # message_url = url + 'sendMessage' + '?chat_id=' + str(message.chat.id) + \
                         #               '&text=<a href="' + item['href'] + '">' + item['name'] + '</a>&parse_mode=HTML'
                         # requests.get(message_url
-                    markup.add(result[0]['name'])
+                    markup.add('qwdqwd', 'dqwqwd')
                         # answer = item['name']
                         # if (IS_LOGGING):
                             # log(message, answer)
