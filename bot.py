@@ -39,11 +39,11 @@ def telemipt(message):
         if (type(result) == list):
             if (len(result)>=5):
                 answer = 'Формулируй запрос чётче. Результатов слишком много: ' + str(len(result));
-                bot.send_message(message.chat.id, answer, reply_markup=remove_markup)
+                bot.send_message(message.chat.id, answer)
                 if (IS_LOGGING):
                     log(message, answer)
             else:
-                markup = types.ReplyKeyboardMarkup(row_width=1)
+                markup = types.ReplyKeyboardMarkup(row_width=1, one_time_keyboard= True)
                 for item in result:
                     #чтобы ссылка красиво выглядела
                     message_url = url + 'sendMessage' + '?chat_id=' + str(message.chat.id) + \
@@ -71,9 +71,9 @@ def telemipt(message):
             if (IS_LOGGING):
                 log(message, answer)
             if (summary_rate != 0):
-                bot.send_message( message.chat.id, make_bot_prediction( summary_rate / 5 ), reply_markup=remove_markup)
+                bot.send_message( message.chat.id, make_bot_prediction( summary_rate / 5 ))
             else:
-                 bot.send_message( message.chat.id, 'Here be dragons later', reply_markup=remove_markup)
+                 bot.send_message( message.chat.id, 'Here be dragons later')
             preps = list(Prepod.query.filter_by(name=result['name']))
             if (len(preps) == 0):
                 prep = Prepod(result['name'])
@@ -84,7 +84,7 @@ def telemipt(message):
             db.session.add(Stats(prep.id, message.chat.id));
             db.session.commit()
         else:
-            bot.send_message(message.chat.id, 'Ничего не найдено', reply_markup=remove_markup)
+            bot.send_message(message.chat.id, 'Ничего не найдено')
             answer = 'Ничего не найдено'
             if (IS_LOGGING):
                 log(message, answer)
