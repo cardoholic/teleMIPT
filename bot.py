@@ -43,7 +43,7 @@ def telemipt(message):
                 if (IS_LOGGING):
                     log(message, answer)
             else:
-                markup = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
+                markup = types.ReplyKeyboardMarkup(row_width=1)
                 for item in result:
                     #чтобы ссылка красиво выглядела
                     message_url = url + 'sendMessage' + '?chat_id=' + str(message.chat.id) + \
