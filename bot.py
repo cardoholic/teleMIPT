@@ -91,9 +91,10 @@ def telemipt(message):
                     bot.send_message( message.chat.id, make_bot_prediction( summary_rate / 5 ))
                 else:
                      bot.send_message( message.chat.id, 'Here be dragons later')
+                print('efe')
                 preps = list(session.query(Prepod).filter_by(name=result['name']))
                 print(preps)
-                print('efe')
+
                 if (len(preps) == 0):
                     prep = Prepod(result['name'])
                     db.session.add(prep)
