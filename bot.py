@@ -54,6 +54,7 @@ def start(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def telemipt(message):
         if message.text:
+            bot.send_chat_action(message.chat.id, 'typing')
             result = parser.finalSearch(message.text)
             summary_rate = 0
             if (type(result) == list):
