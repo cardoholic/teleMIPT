@@ -6,7 +6,7 @@ import requests
 from datetime import datetime, date
 from flask import Flask, request
 import statistic
-# import os
+import os
 # import psycopg2
 # from urllib.parse import urlparse
 from database import db, Prepod, Stats, server
