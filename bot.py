@@ -92,7 +92,7 @@ def telemipt(message):
                 else:
                      bot.send_message( message.chat.id, 'Here be dragons later')
                 print('efe')
-                preps = list(session.query(Prepod).filter_by(name=result['name']))
+                preps = list(Prepod.query.filter_by(name=result['name']))
                 print(preps)
 
                 if (len(preps) == 0):
