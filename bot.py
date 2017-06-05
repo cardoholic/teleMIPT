@@ -43,12 +43,12 @@ def telemipt(message):
                         log(message, answer)
                 else:
                     markup = types.ReplyKeyboardMarkup(row_width=1)
-                    for item in result:
+                    # for item in result:
                         #чтобы ссылка красиво выглядела
                         # message_url = url + 'sendMessage' + '?chat_id=' + str(message.chat.id) + \
                         #               '&text=<a href="' + item['href'] + '">' + item['name'] + '</a>&parse_mode=HTML'
                         # requests.get(message_url
-                        markup.add(types.KeyboardButton(item['name']))
+                    markup.add(types.KeyboardButton(result[0]['name']))
                         # answer = item['name']
                         # if (IS_LOGGING):
                             # log(message, answer)
