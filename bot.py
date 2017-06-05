@@ -32,26 +32,27 @@ def start(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def telemipt(message):
         if message.text:
+            remove_markup = types.ReplyKeyboardRemove()
             bot.send_chat_action(message.chat.id, 'typing')
             result = parser.finalSearch(message.text)
             summary_rate = 0
             if (type(result) == list):
                 if (len(result)>=5):
                     answer = 'Формулируй запрос чётче. Результатов слишком много: ' + str(len(result));
-                    bot.send_message(message.chat.id, answer)
+                    bot.send_message(message.chat.id, answer, reply_markup=remove_markup)
                     if (IS_LOGGING):
                         log(message, answer)
                 else:
-                    markup = types.ReplyKeyboardMarkup(row_width=1)
+                    markup = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
                     for item in result:
                         #чтобы ссылка красиво выглядела
-                        # message_url = url + 'sendMessage' + '?chat_id=' + str(message.chat.id) + \
-                        #               '&text=<a href="' + item['href'] + '">' + item['name'] + '</a>&parse_mode=HTML'
-                        # requests.get(message_url
+                         message_url = url + 'sendMessage' + '?chat_id=' + str(message.chat.id) + \
+                                    '&text=<a href="' + item['href'] + '">' + item['name'] + '</a>&parse_mode=HTML'
+                        requests.get(message_url)
                         markup.add( types.KeyboardButton(item['name']))
-                        # answer = item['name']
-                        # if (IS_LOGGING):
-                            # log(message, answer)
+                        answer = item['name']
+                        if (IS_LOGGING):
+                            log(message, answer)
                     bot.send_message(message.chat.id, "Выберите преподавателя:", reply_markup=markup)
             elif (type(result) == dict):
                 for key in result:
@@ -70,9 +71,9 @@ def telemipt(message):
                 if (IS_LOGGING):
                     log(message, answer)
                 if (summary_rate != 0):
-                    bot.send_message( message.chat.id, make_bot_prediction( summary_rate / 5 ))
+                    bot.send_message( message.chat.id, make_bot_prediction( summary_rate / 5 ), reply_markup=remove_markup)
                 else:
-                     bot.send_message( message.chat.id, 'Here be dragons later')
+                     bot.send_message( message.chat.id, 'Here be dragons later', reply_markup=remove_markup)
                 preps = list(Prepod.query.filter_by(name=result['name']))
                 if (len(preps) == 0):
                     prep = Prepod(result['name'])
@@ -83,7 +84,7 @@ def telemipt(message):
                 db.session.add(Stats(prep.id, message.chat.id));
                 db.session.commit()
             else:
-                bot.send_message(message.chat.id, 'Ничего не найдено')
+                bot.send_message(message.chat.id, 'Ничего не найдено', reply_markup=remove_markup)
                 answer = 'Ничего не найдено'
                 if (IS_LOGGING):
                     log(message, answer)
