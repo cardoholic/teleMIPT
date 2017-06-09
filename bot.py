@@ -13,6 +13,7 @@ from telebot import types
 bot = telebot.TeleBot("349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0")
 url = 'https://api.telegram.org/bot349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0/'
 
+IS_NOT_WORKING = True;
 IS_LOGGING = True
 print('JUST STARTED')
 #логгер
@@ -29,6 +30,10 @@ def log(message, answer):
 def start(message):
     bot.send_message(message.chat.id, 'Привет, ' + message.from_user.first_name)
 #функция обработки входящих сообщений
+@bot.message_handler(func=lambda message: IS_NOT_WORKING == True, content_types=['text'])
+def answer_when_not_work(message):
+    answer = 'Кажется, викимипт не работает 🤧'
+    bot.send_message(message.chat.id, answer)
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def telemipt(message):
     if message.text:
