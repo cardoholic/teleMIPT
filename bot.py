@@ -13,7 +13,7 @@ from telebot import types
 bot = telebot.TeleBot("349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0")
 url = 'https://api.telegram.org/bot349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0/'
 
-IS_NOT_WORKING = True;
+IS_NOT_WORKING = False;
 IS_LOGGING = True
 print('JUST STARTED')
 #логгер
@@ -44,7 +44,7 @@ def telemipt(message):
         if (type(result) == list):
             if (len(result)>=5):
                 answer = 'Формулируй запрос чётче. Результатов слишком много: ' + str(len(result));
-                bot.send_message(message.chat.id, answer)
+                bot.send_message(message.chat.id, answer, reply_markup=remove_markup)
                 if (IS_LOGGING):
                     log(message, answer)
             else:
@@ -72,7 +72,7 @@ def telemipt(message):
                 else:
                     if (key == 'name'):
                         answer = result[key]
-                        bot.send_message( message.chat.id, result[key] )
+                        bot.send_message( message.chat.id, result[key], reply_markup=remove_markup)
             if (IS_LOGGING):
                 log(message, answer)
             if (summary_rate != 0):
@@ -89,7 +89,7 @@ def telemipt(message):
             db.session.add(Stats(prep.id, message.chat.id));
             db.session.commit()
         else:
-            bot.send_message(message.chat.id, 'Ничего не найдено')
+            bot.send_message(message.chat.id, 'Ничего не найдено', reply_markup=remove_markup)
             answer = 'Ничего не найдено'
             if (IS_LOGGING):
                 log(message, answer)
