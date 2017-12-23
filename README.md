@@ -1,4 +1,4 @@
-#Telegram bot for wikiMIPT 
+# Telegram bot for wikiMIPT 
 
 Name on telegram: __@PrepodMIPT_bot__
 
@@ -7,4 +7,5 @@ Just type the name of the teacher you want to know about! That's all! (informati
 
 ### Contacts
 Pavel Severilov – severilov.pa@phystech.edu
+
 Dmitry Tusaev – tusaev.dv@phystech.edu
