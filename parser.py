@@ -22,41 +22,40 @@ def test(func):
 	return run_test
 
 @test
-def getPrepList(name):# здесь получаем список препов с викимипта(тех чьи фамилии на нужную букву начинаются)
-	url = url_base + name[0].upper()#получаем нужную ссылку(посмотри на викимипте как она выглядит)
-	r = requests.get(url)#получаем страницу
+def getPrepList(name):
+	url = url_base + name[0].upper()
+	r = requests.get(url)
 	if( r.status_code == 200 ):
-		soup = BeautifulSoup(r.text, 'html.parser')#запускаем парсер
-		rawPrepList = soup.find(class_ ="mw-category-group")#находим нужный блок
+		soup = BeautifulSoup(r.text, 'html.parser')
+		rawPrepList = soup.find(class_ ="mw-category-group")
 		if not rawPrepList:
-			rawPrepList = soup.find(class_ ="mw-content-ltr")#страница на Я по другому устроена поэтому так
-		rawPrepList = rawPrepList.find('ul').find_all('li')#дальше пробираемся по тегам к нужным данным
+			rawPrepList = soup.find(class_ ="mw-content-ltr")
+		rawPrepList = rawPrepList.find('ul').find_all('li')
 		result = []
 		for rawItem in rawPrepList:
 			cleanItem = list(rawItem.children)[0]
-			result.append({'name' : cleanItem['title'], 'href' : cleanItem['href']})#получаем массив всех препов с именем и ссылкой
+			result.append({'name' : cleanItem['title'], 'href' : cleanItem['href']})
 		return result
 	else:
-		# код 200 это хороший ответ, а на все остальное мы генерим ошибки
 		raise ValueError('Невозможно получить список преподавателей ((00((00(((' + ' - ' + r.status_code)
 
 @test
-def findPrepInList(name, array):# здесь находим нужного препа в списке
+def findPrepInList(name, array):
 	result = []
-	pattern = re.compile(name.lower(), flags=re.IGNORECASE)# получаем нужное регулярное выражение
+	pattern = re.compile(name.lower(), flags=re.IGNORECASE)
 	for item in array:
 		if pattern.match(item['name']):
 			result.append({'name' : item['name'], 'href' : 'http://wikimipt.org' + item['href']})
 	return result;
 @test
-def getPrepInfo(url):#получаем инфу по конкретному препу
+def getPrepInfo(url):
 	r = requests.get(url)
 	if( r.status_code == 200):
 		soup = BeautifulSoup(r.text, 'html.parser')
 		#print(url)
 		items = list(soup.find(class_="wikitable card").children)
 		resultObj = {}
-		resultObj["name"] = items[1].find('b').get_text().strip()#strip удаляет лишние пробелы, а гет_техт получает текст тега
+		resultObj["name"] = items[1].find('b').get_text().strip()
 		resultObj["image"] = items[3].find('td').find('img')['src']
 		rating = list(soup.find(class_="wikitable card").find_all(class_='starrating-div'))
 		resultObj['rate'] = []
@@ -75,11 +74,3 @@ def finalSearch(name):
 			return getPrepInfo(result[0]['href'])
 		else:
 			return result;
-
-
-#файнал серч может вернуть три варианта:
-#1)ноне(если такого препа нет, или проихошла ошибка)
-#2)вернуть обьект, у которого есть три поля - name, image и rate, rate - это массив, который состоит
-#из обьктов у которых в поле skill записано типа 'Халявность' и прочее,
-#а в поле value - значение(это строка - там еще количество голосов есть)
-#3)массив - тогда это означает что у нас несколько совпадений (массив - тоже обьектов)
