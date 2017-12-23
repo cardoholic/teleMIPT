@@ -29,7 +29,7 @@ def getPrepList(name):# здесь получаем список препов с
 		soup = BeautifulSoup(r.text, 'html.parser')#запускаем парсер
 		rawPrepList = soup.find(class_ ="mw-category-group")#находим нужный блок
 		if not rawPrepList:
-			rawPrepList = soup.find(class_ ="mw-content-ltr")#викимипт стремный, там короче страница на Я по другому устроена поэтому так
+			rawPrepList = soup.find(class_ ="mw-content-ltr")#страница на Я по другому устроена поэтому так
 		rawPrepList = rawPrepList.find('ul').find_all('li')#дальше пробираемся по тегам к нужным данным
 		result = []
 		for rawItem in rawPrepList:
@@ -37,25 +37,26 @@ def getPrepList(name):# здесь получаем список препов с
 			result.append({'name' : cleanItem['title'], 'href' : cleanItem['href']})#получаем массив всех препов с именем и ссылкой
 		return result
 	else:
-		raise ValueError('Невозможно получить список преподавателей ((00((00(((' + ' - ' + r.status_code)# код 200 это типа хороший ответ, а на все остальное мы генерим ошибки
+		# код 200 это хороший ответ, а на все остальное мы генерим ошибки
+		raise ValueError('Невозможно получить список преподавателей ((00((00(((' + ' - ' + r.status_code)
 
 @test
 def findPrepInList(name, array):# здесь находим нужного препа в списке
 	result = []
 	pattern = re.compile(name.lower(), flags=re.IGNORECASE)# получаем нужное регулярное выражение
 	for item in array:
-		if pattern.match(item['name']): # ну и просто сверяем все имена с регуляркой
+		if pattern.match(item['name']):
 			result.append({'name' : item['name'], 'href' : 'http://wikimipt.org' + item['href']})
 	return result;
 @test
-def getPrepInfo(url):#получаем инфу по конкретному препу(тут короче все так же)
+def getPrepInfo(url):#получаем инфу по конкретному препу
 	r = requests.get(url)
 	if( r.status_code == 200):
 		soup = BeautifulSoup(r.text, 'html.parser')
 		#print(url)
 		items = list(soup.find(class_="wikitable card").children)
 		resultObj = {}
-		resultObj["name"] = items[1].find('b').get_text().strip()#strip типа удаляет лишние пробелы, а гет_техт получает текст тега
+		resultObj["name"] = items[1].find('b').get_text().strip()#strip удаляет лишние пробелы, а гет_техт получает текст тега
 		resultObj["image"] = items[3].find('td').find('img')['src']
 		rating = list(soup.find(class_="wikitable card").find_all(class_='starrating-div'))
 		resultObj['rate'] = []
@@ -81,4 +82,4 @@ def finalSearch(name):
 #2)вернуть обьект, у которого есть три поля - name, image и rate, rate - это массив, который состоит
 #из обьктов у которых в поле skill записано типа 'Халявность' и прочее,
 #а в поле value - значение(это строка - там еще количество голосов есть)
-#3)массив - тогда это означает что у нас типа несколько совпадений (массив - тоже обьектов)
+#3)массив - тогда это означает что у нас несколько совпадений (массив - тоже обьектов)
