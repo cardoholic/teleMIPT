@@ -16,7 +16,7 @@ url = 'https://api.telegram.org/bot349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0
 IS_NOT_WORKING = False;
 IS_LOGGING = True
 print('JUST STARTED')
-#логгер
+
 def log(message, answer):
     print(datetime.now())
     print("Сообщение от {0} {1}. (id = {2}) \nЗапрос: '{3}' \nОтвет: '{4}'".format(message.from_user.first_name,
@@ -29,11 +29,12 @@ def log(message, answer):
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.send_message(message.chat.id, 'Привет, ' + message.from_user.first_name)
-#функция обработки входящих сообщений
+
 @bot.message_handler(func=lambda message: IS_NOT_WORKING == True, content_types=['text'])
 def answer_when_not_work(message):
     answer = 'Кажется, викимипт не работает 🤧'
     bot.send_message(message.chat.id, answer)
+
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def telemipt(message):
     if message.text:
@@ -50,7 +51,6 @@ def telemipt(message):
             else:
                 markup = types.ReplyKeyboardMarkup(row_width=1, one_time_keyboard= True)
                 for item in result:
-                    #чтобы ссылка красиво выглядела
                     message_url = url + 'sendMessage' + '?chat_id=' + str(message.chat.id) + \
                                 '&text=<a href="' + item['href'] + '">' + item['name'] + '</a>&parse_mode=HTML'
                     requests.get(message_url)
@@ -94,7 +94,6 @@ def telemipt(message):
             if (IS_LOGGING):
                 log(message, answer)
 
-#берет значение рейтинга(число) по данному полю
 def num(line):
     words = line.split(' ')
     num = words[0]
@@ -102,7 +101,7 @@ def num(line):
         return float(num)
     else:
         return 0.0
-#делаем предсказание исходя из суммарного рейтинга
+
 def make_bot_prediction(rate):
     if (rate >= 4.5) :
         return 'Бот считает, что этот препод бог'
@@ -115,9 +114,6 @@ def make_bot_prediction(rate):
     else:
         return 'Бот считает, что это опасность'
 
-#инсайт : телеграм сжимает пробелы и нижние подчеркивания и черт знает что еще - записи,
-#         в которых одинаковое число символов могут иметь разную длину, поэтому число пробелов нельзя
-#         рассчитать исходя из длины строки
 def categories_prettify(item):
     if(item['skill'] == u'Знания'):
         return item['skill'] + '                                ' + \
@@ -135,7 +131,6 @@ def categories_prettify(item):
         return item['skill'] + '      ' + \
         emoji_prettify(item['value']) + '\n'
 
-#печатает звездочки для рейтинга
 def emoji_prettify(line):
     return round(num(line)) * u'★' + (5 - round(num(line))) * u'☆' + '   ' + line
 
@@ -149,6 +144,7 @@ def webhook():
     bot.remove_webhook()
     bot.set_webhook(url="https://mipttelegram.herokuapp.com/bot")
     return "!", 200
+
 @server.route("/stop")
 def webhook_stop():
     bot.remove_webhook()
