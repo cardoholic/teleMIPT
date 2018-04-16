@@ -10,8 +10,8 @@ import os
 from database import db, Prepod, Stats, server
 from telebot import types
 
-bot = telebot.TeleBot("349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0")
-url = 'https://api.telegram.org/bot349791719:AAGz3KaZsc3OPuj1D4rtxIVWtVZr9azAqG0/'
+bot = telebot.TeleBot("")
+url = ''
 
 IS_NOT_WORKING = False;
 IS_LOGGING = True
